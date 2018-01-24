@@ -1,10 +1,13 @@
 package Algorithms;
 
+import BouncyCastle.AesBC;
+
 import javax.crypto.NoSuchPaddingException;
 import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 
 public class AlgorithmFactory {
-    public Algorithm getAlgorithm(String algorithmName) throws NoSuchAlgorithmException, NoSuchPaddingException {
+    public Algorithm getAlgorithm(String algorithmName) throws NoSuchAlgorithmException, NoSuchPaddingException, NoSuchProviderException {
 
         if (algorithmName == "AES" ){
             return new AES();
@@ -17,6 +20,9 @@ public class AlgorithmFactory {
         }
         if (algorithmName == "RC2" ){
             return new RC2();
+        }
+        if (algorithmName == "AESBC" ) {
+            return new AesBC();
         }
 
         return null;
