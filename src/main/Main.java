@@ -24,12 +24,16 @@ public class Main {
             Algorithm ccm = factory.getAlgorithm("RC5");
 
             byte[] cipherDataAes = aes.encrypt(data);
-            byte[] cipherDataRc4 = rc4.encrypt(data);
-            byte[] cipherDataCcm = ccm.encrypt(data);
+//            byte[] cipherDataRc4 = rc4.encrypt(data);
+//            byte[] cipherDataCcm = ccm.encrypt(data);
+
+
+            byte[] dataAes = aes.decrypt(cipherDataAes);
 
             System.out.println(new String(cipherDataAes));
-            System.out.println(new String(cipherDataRc4));
-            System.out.println(new String(cipherDataCcm));
+            System.out.println(new String(dataAes));
+//            System.out.println(new String(cipherDataRc4));
+//            System.out.println(new String(cipherDataCcm));
 
 
         } catch (UnsupportedEncodingException e) {
