@@ -12,14 +12,11 @@ public class AlgorithmFactory {
         if (algorithmName == "Blowfish" ){
             return new Blowfish();
         }
-        if (algorithmName == "CCM" ){
-            return new CCM();
-        }
         if (algorithmName == "RC4" ){
             return new RC4();
         }
-        if (algorithmName == "RC5" ){
-            return new RC5();
+        if (algorithmName == "RC2" ){
+            return new RC2();
         }
 
         return null;
