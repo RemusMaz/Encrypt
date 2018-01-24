@@ -21,17 +21,22 @@ public class Main {
 
             Algorithm aes = factory.getAlgorithm("AES");
             Algorithm rc4 = factory.getAlgorithm("RC4");
-            Algorithm ccm = factory.getAlgorithm("RC5");
 
-            byte[] cipherDataAes = aes.encrypt(data);
-//            byte[] cipherDataRc4 = rc4.encrypt(data);
-//            byte[] cipherDataCcm = ccm.encrypt(data);
+            byte[] cipherData;
+            byte[] dataD;
+
+            cipherData = aes.encrypt(data);
+            dataD = aes.decrypt(cipherData);
+
+            System.out.println(new String(cipherData));
+            System.out.println(new String(dataD));
+
+            cipherData = rc4.encrypt(data);
+            dataD = rc4.decrypt(cipherData);
 
 
-            byte[] dataAes = aes.decrypt(cipherDataAes);
-
-            System.out.println(new String(cipherDataAes));
-            System.out.println(new String(dataAes));
+            System.out.println(new String(cipherData));
+            System.out.println(new String(dataD));
 //            System.out.println(new String(cipherDataRc4));
 //            System.out.println(new String(cipherDataCcm));
 
