@@ -22,21 +22,21 @@ public class Main {
             byte[] cipherData;
             byte[] dataD;
 
-            Algorithm aes = factory.getAlgorithm("AES");
+            Algorithm aes = factory.getAlgorithm("AES", 128);
             cipherData = aes.encrypt(data);
             dataD = aes.decrypt(cipherData);
 
             System.out.println(new String(cipherData));
             System.out.println(new String(dataD));
 
-            Algorithm rc4 = factory.getAlgorithm("RC4");
+            Algorithm rc4 = factory.getAlgorithm("RC4", 512);
             cipherData = rc4.encrypt(data);
             dataD = rc4.decrypt(cipherData);
 
             System.out.println(new String(cipherData));
             System.out.println(new String(dataD));
 
-            Algorithm blowfish = factory.getAlgorithm("Blowfish");
+            Algorithm blowfish = factory.getAlgorithm("Blowfish", 256);
             cipherData = blowfish.encrypt(data);
             dataD = blowfish.decrypt(cipherData);
 
@@ -50,23 +50,19 @@ public class Main {
             System.out.println(new String(cipherData));
             System.out.println(new String(dataD));
 
-            Algorithm rc5 = factory.getAlgorithm("RC2");
+            Algorithm rc5 = factory.getAlgorithm("RC2", 1024);
             cipherData = rc5.encrypt(data);
             dataD = rc5.decrypt(cipherData);
 
             System.out.println(new String(cipherData));
             System.out.println(new String(dataD));
 
-            Algorithm aesbc = factory.getAlgorithm("AESBC");
+            Algorithm aesbc = factory.getAlgorithm("AESBC", 128);
             cipherData = aesbc.encrypt(data);
             dataD = aesbc.decrypt(cipherData);
 
             System.out.println(new String(cipherData));
             System.out.println(new String(dataD));
-//
-//  System.out.println(new String(cipherDataRc4));
-//            System.out.println(new String(cipherDataCcm));
-
 
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
