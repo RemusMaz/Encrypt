@@ -7,9 +7,19 @@ import javax.crypto.spec.SecretKeySpec;
 import java.security.NoSuchAlgorithmException;
 
 class AES extends Algorithm {
-    public AES(Integer keySize) throws NoSuchPaddingException, NoSuchAlgorithmException {
-        this.cipher = Cipher.getInstance("AES");
+    public AES(Integer keySize, String mode, String padding) throws NoSuchPaddingException, NoSuchAlgorithmException {
+        // set Cipher
+        if (mode == null || mode.equals("")) {
+            this.cipher = Cipher.getInstance("AES");
+        }
+        else {
+            this.cipher = Cipher.getInstance("AES/" + mode + "/" + padding);
+        }
 
+        // set IV
+        generateIvParams();
+
+        // set Key
         KeyGenerator keygen = KeyGenerator.getInstance("AES") ;
         keygen.init(keySize) ;
 

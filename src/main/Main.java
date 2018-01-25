@@ -7,6 +7,7 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import java.io.UnsupportedEncodingException;
+import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
@@ -22,21 +23,21 @@ public class Main {
             byte[] cipherData;
             byte[] dataD;
 
-            Algorithm aes = factory.getAlgorithm("AES", 128);
+            Algorithm aes = factory.getAlgorithm("AES", 128, "CBC", "PKCS5Padding");
             cipherData = aes.encrypt(data);
             dataD = aes.decrypt(cipherData);
 
             System.out.println(new String(cipherData));
             System.out.println(new String(dataD));
 
-            Algorithm rc4 = factory.getAlgorithm("RC4", 512);
+            Algorithm rc4 = factory.getAlgorithm("RC4", 512, "", "");
             cipherData = rc4.encrypt(data);
             dataD = rc4.decrypt(cipherData);
 
             System.out.println(new String(cipherData));
             System.out.println(new String(dataD));
 
-            Algorithm blowfish = factory.getAlgorithm("Blowfish", 256);
+            Algorithm blowfish = factory.getAlgorithm("Blowfish", 256, "CBC", "PKCS5Padding");
             cipherData = blowfish.encrypt(data);
             dataD = blowfish.decrypt(cipherData);
 
@@ -50,14 +51,14 @@ public class Main {
             System.out.println(new String(cipherData));
             System.out.println(new String(dataD));
 
-            Algorithm rc5 = factory.getAlgorithm("RC2", 1024);
+            Algorithm rc5 = factory.getAlgorithm("RC2", 1024, "CBC", "PKCS5Padding");
             cipherData = rc5.encrypt(data);
             dataD = rc5.decrypt(cipherData);
 
             System.out.println(new String(cipherData));
             System.out.println(new String(dataD));
 
-            Algorithm aesbc = factory.getAlgorithm("AESBC", 128);
+            Algorithm aesbc = factory.getAlgorithm("AESBC", 128, "CBC", "PKCS5Padding");
             cipherData = aesbc.encrypt(data);
             dataD = aesbc.decrypt(cipherData);
 
@@ -77,6 +78,8 @@ public class Main {
         } catch (BadPaddingException e) {
             e.printStackTrace();
         } catch (NoSuchProviderException e) {
+            e.printStackTrace();
+        } catch (InvalidAlgorithmParameterException e) {
             e.printStackTrace();
         }
 
