@@ -1,6 +1,8 @@
 package Algorithms;
 
 import BouncyCastle.AesBC;
+import BouncyCastle.RC2BC;
+import BouncyCastle.RC4BC;
 
 import javax.crypto.NoSuchPaddingException;
 import java.security.NoSuchAlgorithmException;
@@ -24,6 +26,15 @@ public class AlgorithmFactory {
         }
         if (algorithmName == "AESBC" ) {
             return new AesBC(keySize, mode, padding);
+        }
+        if (algorithmName == "BlowfishBC") {
+            return new AesBC(keySize, mode, padding);
+        }
+        if (algorithmName == "RC2BC") {
+            return new RC2BC(keySize, mode, padding);
+        }
+        if (algorithmName == "RC4BC") {
+            return new RC4BC(keySize,mode, padding);
         }
 
         return null;

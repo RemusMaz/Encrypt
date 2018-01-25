@@ -20,50 +20,16 @@ public class Main {
 
         try {
             byte[] data = "toti algoritmii de criptare fac acelasi lucru, are you mad?".getBytes("UTF-8");
-            byte[] cipherData;
-            byte[] dataD;
 
-            Algorithm aes = factory.getAlgorithm("AES", 128, "CBC", "PKCS5Padding");
-            cipherData = aes.encrypt(data);
-            dataD = aes.decrypt(cipherData);
+            testAlgorithm("AES", data, new int[]{128, 192, 256}, new String[]{"CBC", "OFB", "CFB", "CTR"});
+            testAlgorithm("AESBC", data, new int[]{128, 192, 256}, new String[]{"CBC", "OFB", "CFB", "CTR"});
+            testAlgorithm("Blowfish", data, new int[]{128, 192, 256}, new String[]{"CBC", "OFB", "CFB", "CTR"});
+            testAlgorithm("BlowfishBC", data, new int[]{128, 192, 256}, new String[]{"CBC", "OFB", "CFB", "CTR"});
+            testAlgorithm("RC2", data, new int[]{64, 128}, new String[]{"CBC", "OFB", "CFB", "CTR"});
+            testAlgorithm("RC2BC", data, new int[]{64, 128}, new String[]{"CBC", "OFB", "CFB", "CTR"});
 
-            System.out.println(new String(cipherData));
-            System.out.println(new String(dataD));
-
-            Algorithm rc4 = factory.getAlgorithm("RC4", 512, "", "");
-            cipherData = rc4.encrypt(data);
-            dataD = rc4.decrypt(cipherData);
-
-            System.out.println(new String(cipherData));
-            System.out.println(new String(dataD));
-
-            Algorithm blowfish = factory.getAlgorithm("Blowfish", 256, "CBC", "PKCS5Padding");
-            cipherData = blowfish.encrypt(data);
-            dataD = blowfish.decrypt(cipherData);
-
-            System.out.println(new String(cipherData));
-            System.out.println(new String(dataD));
-
-//            Algorithm ccm = factory.getAlgorithm("CCM");
-//            cipherData = ccm.encrypt(data);
-//            dataD = ccm.decrypt(cipherData);
-
-            System.out.println(new String(cipherData));
-            System.out.println(new String(dataD));
-
-            Algorithm rc5 = factory.getAlgorithm("RC2", 1024, "CBC", "PKCS5Padding");
-            cipherData = rc5.encrypt(data);
-            dataD = rc5.decrypt(cipherData);
-
-            System.out.println(new String(cipherData));
-            System.out.println(new String(dataD));
-
-            Algorithm aesbc = factory.getAlgorithm("AESBC", 128, "CBC", "PKCS5Padding");
-            cipherData = aesbc.encrypt(data);
-            dataD = aesbc.decrypt(cipherData);
-
-            System.out.println(new String(cipherData));
-            System.out.println(new String(dataD));
+            testRC4("RC4", data, new int[]{128, 192, 256, 512, 1024});
+            testRC4("RC4BC", data, new int[]{128, 192, 256, 512, 1024});
 
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -85,4 +51,53 @@ public class Main {
 
     }
 
+    public static void computeTime(String message, long startTime) {
+        System.out.println(message + " - Total Time: " + (System.nanoTime() - startTime) / 1000000 + "s");
+    }
+
+    public static void testAlgorithm(String algorithmName, byte[] data, int[] keySizes, String[] modes)
+            throws NoSuchPaddingException, NoSuchAlgorithmException, NoSuchProviderException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException, InvalidKeyException {
+        AlgorithmFactory factory = new AlgorithmFactory();
+        byte[] cipherData;
+        byte[] dataD;
+
+        for (int keySize : keySizes) {
+            for (String mode : modes) {
+                Algorithm aes = factory.getAlgorithm(algorithmName, keySize, mode, "PKCS5Padding");
+
+                long time = System.nanoTime();
+                cipherData = aes.encrypt(data);
+                computeTime(algorithmName + " " + keySize + "key with mode " + mode + " encrypt", time);
+
+                time = System.nanoTime();
+                dataD = aes.decrypt(cipherData);
+                computeTime(algorithmName + " " + keySize + "key with mode " + mode + " decrypt", time);
+
+                System.out.println(new String(cipherData));
+                System.out.println(new String(dataD));
+            }
+        }
+
+    }
+
+    public static void testRC4(String algorithmVariation, byte[] data, int[] keySizes)
+            throws NoSuchPaddingException, NoSuchAlgorithmException, NoSuchProviderException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException, InvalidKeyException {
+        AlgorithmFactory factory = new AlgorithmFactory();
+        byte[] cipherData;
+        byte[] dataD;
+        for (int keySize : keySizes) {
+            Algorithm rc4 = factory.getAlgorithm(algorithmVariation, keySize, "", "");
+
+            long time = System.nanoTime();
+            cipherData = rc4.encrypt(data);
+            computeTime(algorithmVariation + " " + keySize + "key encrypt", time);
+
+            time = System.nanoTime();
+            dataD = rc4.decrypt(cipherData);
+            computeTime(algorithmVariation + " " + keySize + "key decrypt", time);
+
+            System.out.println(new String(cipherData));
+            System.out.println(new String(dataD));
+        }
+    }
 }
