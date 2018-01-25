@@ -9,6 +9,7 @@ import javax.crypto.NoSuchPaddingException;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 
 public class Main {
 
@@ -42,9 +43,9 @@ public class Main {
             System.out.println(new String(cipherData));
             System.out.println(new String(dataD));
 
-            Algorithm ccm = factory.getAlgorithm("CCM");
-            cipherData = ccm.encrypt(data);
-            dataD = ccm.decrypt(cipherData);
+//            Algorithm ccm = factory.getAlgorithm("CCM");
+//            cipherData = ccm.encrypt(data);
+//            dataD = ccm.decrypt(cipherData);
 
             System.out.println(new String(cipherData));
             System.out.println(new String(dataD));
@@ -52,6 +53,13 @@ public class Main {
             Algorithm rc5 = factory.getAlgorithm("RC2");
             cipherData = rc5.encrypt(data);
             dataD = rc5.decrypt(cipherData);
+
+            System.out.println(new String(cipherData));
+            System.out.println(new String(dataD));
+
+            Algorithm aesbc = factory.getAlgorithm("AESBC");
+            cipherData = aesbc.encrypt(data);
+            dataD = aesbc.decrypt(cipherData);
 
             System.out.println(new String(cipherData));
             System.out.println(new String(dataD));
@@ -71,6 +79,8 @@ public class Main {
         } catch (IllegalBlockSizeException e) {
             e.printStackTrace();
         } catch (BadPaddingException e) {
+            e.printStackTrace();
+        } catch (NoSuchProviderException e) {
             e.printStackTrace();
         }
 
